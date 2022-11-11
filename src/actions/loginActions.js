@@ -2,7 +2,7 @@ import { LOGIN_USER, GENERATE_LINK_TOKEN, GET_TRANSACTIONS} from './types';
 import axios from 'axios';
 
 export const loginUser = (email, password, callback) => dispatch => {
-    axios.post('http://localhost:3001/login',{email, password})
+    axios.post('http://34.235.139.150/login',{email, password})
          .then(res => {
                 if (res.status === 200){
                     dispatch({
@@ -17,7 +17,7 @@ export const loginUser = (email, password, callback) => dispatch => {
 
 export const generateLinkToken = (uid) => dispatch => {
     console.log(uid);
-    axios.post('http://localhost:3001/create_link_token',{uid})
+    axios.post('http://34.235.139.150/create_link_token',{uid})
          .then(res => {
                 if (res.status === 200){
                     dispatch({
@@ -29,7 +29,7 @@ export const generateLinkToken = (uid) => dispatch => {
 }
 
 export const getTransactions = (uid, callback) => dispatch => {
-    axios.post('http://localhost:3001/transactions',{uid})
+    axios.post('http://34.235.139.150/transactions',{uid})
          .then(res => {
                 if (res.status === 200){
                     dispatch({

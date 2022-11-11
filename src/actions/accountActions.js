@@ -3,7 +3,7 @@ import {GET_ACCOUNTS, PARSE_ACCOUNTS} from './types';
 import axios from 'axios';
 
 export const getAccounts = (uid, callback) => dispatch => {
-    axios.post('http://localhost:3001/accounts',{uid})
+    axios.post('http://34.235.139.150/accounts',{uid})
          .then(res => {
                 if (res.status === 200){
                     dispatch({
