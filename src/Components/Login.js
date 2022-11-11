@@ -1,16 +1,18 @@
-import React, {  Component } from "react";
+import React, { Component } from "react";
 import axios from 'axios';
-import {Redirect} from "react-router";
+import { Redirect } from "react-router";
 import { connect } from 'react-redux';
-import { loginUser, generateLinkToken, getTransactions} from '../actions/loginActions';
-import { Button, Container, Grid} from '@material-ui/core';
+import { loginUser, generateLinkToken, getTransactions } from '../actions/loginActions';
+import { Button, Container, Grid } from '@material-ui/core';
+import { Link } from "react-router-dom";
 
-class Login extends Component{
-    constructor(props){
+class Login extends Component {
+    constructor(props) {
         super(props);
 
-        this.state = {email: '',
-                      password: ''
+        this.state = {
+            email: '',
+            password: ''
         };
 
         this.updateEmail = this.updateEmail.bind(this);
@@ -19,37 +21,37 @@ class Login extends Component{
 
     }
 
-    updateEmail(event){
+    updateEmail(event) {
         this.setState({
             email: event.target.value
         }, () => console.log(this.state));
     }
 
-    updatePassword(event){
+    updatePassword(event) {
         this.setState({
             password: event.target.value
         }, () => console.log(this.state));
     }
 
-    submitForm(event){
+    submitForm(event) {
         event.preventDefault();
 
         this.props.loginUser(this.state.email, this.state.password);
     }
 
-    componentDidUpdate(){
-        if (this.props.uid !== ''){
+    componentDidUpdate() {
+        if (this.props.uid !== '') {
 
             this.props.generateLinkToken(this.props.uid);
             this.props.getTransactions(this.props.uid);
         }
     }
 
-    render(){
-        if (this.props.isLoggedin){
-            return (<Redirect to={{pathname: "/overview", state: {uid: this.state.uid}}}/>)
+    render() {
+        if (this.props.isLoggedin) {
+            return (<Redirect to={{ pathname: "/overview", state: { uid: this.state.uid } }} />)
         }
-            
+
         return (
             <Container>
                 <Grid
@@ -62,12 +64,12 @@ class Login extends Component{
 
                     <div className="form-group">
                         <label>Email address</label>
-                        <input type="email" className="form-control" placeholder="Enter email" value={this.state.email} onChange={this.updateEmail}/>
+                        <input type="email" className="form-control" placeholder="Enter email" value={this.state.email} onChange={this.updateEmail} />
                     </div>
 
                     <div className="form-group">
                         <label>Password</label>
-                        <input type="password" className="form-control" placeholder="Enter password" value={this.state.password} onChange={this.updatePassword}/>
+                        <input type="password" className="form-control" placeholder="Enter password" value={this.state.password} onChange={this.updatePassword} />
                     </div>
 
                     <div className="form-group">
@@ -77,11 +79,17 @@ class Login extends Component{
                         </div>
                     </div>
 
-                    <Button variant="contained" color="primary" onClick={this.submitForm}>Login</Button>
+                    <div>
+                        <Button variant="contained" color="primary" onClick={this.submitForm}>Login</Button>
+                        <Button variant="contained" color="primary" style={{marginLeft:40}} >
+                            <a href="/sign-up" style={{color:'white', textDecoration:'none'}}>SignUp</a>
+                        </Button>
+                    </div>
+
                 </Grid>
             </Container>
             // <form onSubmit={this.submitForm}>
-                
+
             // </form>
         )
     }
@@ -93,4 +101,4 @@ const mapStateToProps = state => ({
     link_token: state.login.link_token,
     transactions: state.login.transactions
 });
-export default connect(mapStateToProps, { loginUser, generateLinkToken, getTransactions})(Login);
+export default connect(mapStateToProps, { loginUser, generateLinkToken, getTransactions })(Login);
